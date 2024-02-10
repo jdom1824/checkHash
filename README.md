@@ -28,6 +28,6 @@ Execute the printerHash.py script by running the following command:
 ```bash
 python3 printerHash.py
 ```
-### 2.1 **Enter the Directory Path:**
+Markup : * Enter the Directory Path:
 
 When prompted, enter the full path to the directory containing the files you want to calculate hashes for and press Enter.
