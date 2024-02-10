@@ -31,3 +31,13 @@ python3 printerHash.py
 * Enter the Directory Path:
 
     When prompted, enter the full path to the directory containing the files you want to calculate hashes for and press Enter.
+
+* Monitor Progress:
+
+    The script will start calculating hashes for the files in the specified directory. You'll see a progress bar indicating the status of each file's hash calculation.
+
+* View Results:
+
+    Once the script completes the hash calculation process, it will save the results to a JSON file named <directory_name>_hashes.json in the same directory.
+
+3. **How to Use checkHash.py**
