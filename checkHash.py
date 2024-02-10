@@ -1,3 +1,5 @@
+# Author: jdom1824@inaoep.mx
+# This script verify hashes of files in a directory
 import hashlib
 import os
 import json
