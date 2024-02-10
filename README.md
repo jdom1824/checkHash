@@ -11,7 +11,7 @@ You can install the required dependencies using the following command:
 
 ```bash
 pip install -r requirements.txt
-
+```
 1. **Installation:**
 
    Ensure you have Python 3.11.7 installed on your system. You can download it from the official Python website: [python.org](https://www.python.org/downloads/).
@@ -21,3 +21,4 @@ pip install -r requirements.txt
    ```bash
    git clone https://github.com/jdom1824/checkHash.git
    cd checkHash
+   ```
