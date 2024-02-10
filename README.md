@@ -30,4 +30,4 @@ python3 printerHash.py
 ```
 * Enter the Directory Path:
 
-When prompted, enter the full path to the directory containing the files you want to calculate hashes for and press Enter.
+* * When prompted, enter the full path to the directory containing the files you want to calculate hashes for and press Enter.
