@@ -1,0 +1,20 @@
+%% calibration result - lidar to imu 
+version: 1.0.1.4 
+Sat Sep  4 20:17:31 2021
+HeaderFrame: 
+imu 
+ChildFrame: 
+lidar 
+Q(w, x, y, z): 
+0.00876782 0.99994606 0.00548801 -0.00093148 
+T(x-y-z, unit: mm): 
+35.08 16.94 -46.44 
+Roll-Pitch-Yaw (Sequence: ZYX, unit: deg): 
+178.99587158 0.11224802 0.62792330 
+RMS value of chi2() after boresight rot optimization: 
+0.0507 
+RMS value for lidar plumb YZ projection detection error: 
+0.0356 
+RMS value for gravity YZ projection evaluation: 
+0.0717 
+SN number: 3FCDJ8G00474UR

@@ -1,0 +1,21 @@
+%% calibration result - lidar to camera
+#TOOL FOR LIDAR&CAMERA CALIBRATION BY TM ver00.01.03 (20210617) 
+Sat Sep 11 14:06:39 2021
+HeaderFrame:
+cam_4_rectified
+ChildFrame:
+lidar
+Q(w, x, y, z):
+0.50416239 0.49618219 -0.50430998 0.49527260 
+T(x-y-z, unit: mm):
+-24.5130333 -48.9914281 -7.73834484 
+Roll-Pitch-Yaw (Sequence: XYZ, unit: deg):
+90.0602 -0.9751 89.9569 
+K:
+484.521 0 363.58 
+0 484.593 235.613 
+0 0 1 
+d:
+0 0 0 0 0 
+rms:
+0.140922656
