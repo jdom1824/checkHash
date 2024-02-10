@@ -1,10 +1,8 @@
-# Autor: jdom1824@inaoep.mx
-# This script calculates hashes of files in a directory and saves the results to a JSON file
 import hashlib
 import os
 import json
-from tqdm import tqdm
 import time
+from colorama import Fore, Style
 
 def calculate_hash(file_path, algorithm='sha256'):
     """
@@ -14,7 +12,6 @@ def calculate_hash(file_path, algorithm='sha256'):
     :param algorithm: Hash algorithm to use (default: 'sha256').
     :return: The calculated hash in hexadecimal format.
     """
-    # Select the hash algorithm
     if algorithm.lower() == 'sha1':
         hash_func = hashlib.sha1()
     elif algorithm.lower() == 'sha256':
@@ -24,59 +21,46 @@ def calculate_hash(file_path, algorithm='sha256'):
     else:
         raise ValueError("Invalid hash algorithm")
 
-    # Calculate the hash of the file
     with open(file_path, 'rb') as f:
-        file_size = os.path.getsize(file_path)
-        if file_size == 0:
-            return hash_func.hexdigest()  # Return an empty hash if the file size is zero
-
-        progress = tqdm(total=file_size, unit='B', unit_scale=True, desc=f"Hashing files {os.path.basename(file_path)}", leave=False, bar_format="{desc:<30} {percentage:3.0f}%|{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}]")
         for block in iter(lambda: f.read(4096), b''):
             hash_func.update(block)
-            progress.update(len(block))
-            time.sleep(0.001)  # Adjust the sleep time as needed
-        progress.close()
 
-    # Return the hash in hexadecimal format
     return hash_func.hexdigest()
 
-# Ask the user for the directory path
+def verify_hashes(directory_path, json_file):
+    """
+    Verify hashes of files in the directory with the hashes from the JSON file.
+
+    :param directory_path: Path of the directory containing the files.
+    :param json_file: Path of the JSON file containing the hashes.
+    """
+    # Load hashes from JSON file
+    with open(json_file, 'r') as f:
+        expected_hashes = json.load(f)
+    # Initialize counters
+    matching_files = 0
+    mismatching_files = 0
+
+    # Verify hashes of files in the directory
+    for filename, expected_hash in expected_hashes.items():
+        file_path = os.path.join(directory_path, filename)
+        if os.path.isfile(file_path):
+            calculated_hash = calculate_hash(file_path)
+            if calculated_hash == expected_hash:
+                print(f"Hash of file '{filename}' {Fore.GREEN}matches the expected hash.{Style.RESET_ALL}")
+                matching_files += 1
+            else:
+                print(f"Hash of file '{filename}' {Fore.RED}does not match the expected hash.{Style.RESET_ALL}")
+                mismatching_files += 1
+            time.sleep(0.5)  # Add a delay of 0.5 seconds
+
+    # Print summary
+    print(f"\nSummary:")
+    print(f"Matching files: {Fore.GREEN}{matching_files}{Style.RESET_ALL}")
+    print(f"Mismatching files: {Fore.RED}{mismatching_files}{Style.RESET_ALL}")
+
+# Example usage
 directory_path = input("Enter the directory path: ")
+json_file = input("Enter the path of the JSON file: ")
 
-# Extract directory name
-directory_name = os.path.basename(directory_path)
-
-# Dictionary to store file hashes
-file_hashes = {}
-
-# Track the number of processed files and any errors
-processed_files = 0
-errors = 0
-
-# Calculate hashes for all files in the directory
-for filename in os.listdir(directory_path):
-    filepath = os.path.join(directory_path, filename)
-    if os.path.isfile(filepath):
-        try:
-            hash_sha256 = calculate_hash(filepath, algorithm='sha256')
-            file_hashes[filename] = hash_sha256
-            processed_files += 1
-        except Exception as e:
-            print(f"Error processing file '{filename}': {e}")
-            errors += 1
-
-# Write the dictionary of file hashes to a JSON file
-output_file = f'{directory_name}_hashes.json'
-with open(output_file, 'w') as f:
-    json.dump(file_hashes, f, indent=4)
-
-# Print summary
-print(f"\nSummary:")
-print(f"Total files processed: {processed_files}")
-print(f"Total errors encountered: {errors}")
-if errors == 0:
-    print("All hashes calculated successfully.")
-else:
-    print("Some hashes could not be calculated. Please check the error messages.")
-
-print(f"\nHashes of files in directory '{directory_path}' have been saved to '{output_file}'")
+verify_hashes(directory_path, json_file)
